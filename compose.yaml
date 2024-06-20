@@ -1,0 +1,24 @@
+services:
+  backend:
+    container_name: python
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    ports:
+      - 8000:8000
+    tty: true
+    volumes:
+      - ./backend:/home/python/app
+      - python-cache-data:/home/python/app/.pytest_cache
+      - python-cache-data:/home/python/app/.ruff_cache
+      - python-cache-data:/home/python/app/.mypy_cache
+    networks:
+      - my-network 
+
+volumes:
+  python-cache-data:
+    name: named-python-cache-data
+
+networks:
+  my-network:
+    driver: bridge
